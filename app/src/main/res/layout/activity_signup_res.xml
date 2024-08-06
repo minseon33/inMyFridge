@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activities.SignupResActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="회원가입"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="비밀번호 입력"
+            android:textSize="30dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+        <EditText
+            android:id="@+id/edt_signup_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="비밀번호를 입력해 주세요"
+            android:paddingTop="20dp"
+            android:inputType="textPassword"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txt_signup_pwalert"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:text="비밀 번호는 공백 없이 숫자와 영문을 포함하여\n 8자리 이상으로 입력해 주세요"/>
+
+
+
+        <EditText
+            android:id="@+id/edt_signup_auth"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="textPassword"
+            android:hint="비밀번호를 한 번 더 입력해 주세요"
+            android:paddingTop="20dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txt_signup_pwcheckalert"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/btn_signup_netx"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@color/gray"
+            android:textColor="@color/white"
+            android:text="가입하기"
+            android:enabled="false"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

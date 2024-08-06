@@ -1,4 +1,4 @@
-package com.example.kocoatalk;
+package com.example.kocoatalk.Utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

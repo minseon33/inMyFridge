@@ -12,8 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.kocoatalk.GmailSender
-import com.example.kocoatalk.LoadingDialog
+import com.example.kocoatalk.Utils.GmailSender
 import com.example.kocoatalk.R
 import javax.mail.MessagingException
 import javax.mail.SendFailedException
@@ -26,7 +25,10 @@ class SignupMailActivity : AppCompatActivity() {
     private lateinit var edt_authnum: EditText
     private lateinit var txt_alert: TextView
     private lateinit var authcode: String
-    var gMailSender = GmailSender("joonho340@gmail.com", "fmjyziwxaplloryx")
+    var gMailSender = GmailSender(
+        "joonho340@gmail.com",
+        "fmjyziwxaplloryx"
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_mail)
@@ -148,7 +150,6 @@ class SignupMailActivity : AppCompatActivity() {
 
                 // 온클릭과 함께 만들어진 인증번호 이메일에 넣어서 보내기
                 runOnUiThread {
-
 
                     Toast.makeText(applicationContext, "송신 완료", Toast.LENGTH_SHORT).show()
                 }

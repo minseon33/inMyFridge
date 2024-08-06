@@ -1,5 +1,6 @@
-package com.example.kocoatalk
+package com.example.kocoatalk.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.kocoatalk.GmailSender
+import com.example.kocoatalk.LoadingDialog
+import com.example.kocoatalk.R
 import javax.mail.MessagingException
 import javax.mail.SendFailedException
 
@@ -73,8 +77,58 @@ class SignupMailActivity : AppCompatActivity() {
         btn_auth.setOnClickListener {
             sendEmail(edt_email.text.toString())
             btn_auth.isEnabled = false
+            btn_auth.setBackgroundColor(
+                ContextCompat.getColor(
+                    this@SignupMailActivity,
+                    R.color.gray
+                )
+            )
             //전송 직후에 일단 disable시킴
         }
+
+        edt_authnum.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Do nothing
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) {
+                    btn_next.isEnabled = false
+                    btn_next.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this@SignupMailActivity,
+                            R.color.gray
+                        )
+                    )
+
+
+                } else {
+                    btn_next.isEnabled = true
+                    btn_next.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this@SignupMailActivity,
+                            R.color.green
+                        )
+                    )
+                }
+            }
+        })
+
+        btn_next.setOnClickListener {
+
+            if (authcode == edt_authnum.text.toString()) {
+                val i = Intent(this@SignupMailActivity, SignupResActivity::class.java)
+                startActivity(i)
+            } else {
+                Toast.makeText(applicationContext, "잘못된 인증번호 입니다.", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
     }
 
     private fun isValidEmail(email: String): Boolean {

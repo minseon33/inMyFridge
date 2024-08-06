@@ -1,11 +1,11 @@
-package com.example.kocoatalk
+package com.example.kocoatalk.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kocoatalk.R
 
 class MainActivity : AppCompatActivity() {
 

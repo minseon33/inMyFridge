@@ -1,8 +1,5 @@
 package com.example.kocoatalk
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import javax.mail.MessagingException
+import javax.mail.SendFailedException
 
 class SignupMailActivity : AppCompatActivity() {
 
@@ -23,7 +22,7 @@ class SignupMailActivity : AppCompatActivity() {
     private lateinit var edt_authnum: EditText
     private lateinit var txt_alert: TextView
     private lateinit var authcode: String
-
+    var gMailSender = GmailSender("joonho340@gmail.com", "fmjyziwxaplloryx")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_mail)
@@ -73,6 +72,8 @@ class SignupMailActivity : AppCompatActivity() {
 
         btn_auth.setOnClickListener {
             sendEmail(edt_email.text.toString())
+            btn_auth.isEnabled = false
+            //전송 직후에 일단 disable시킴
         }
     }
 
@@ -80,30 +81,41 @@ class SignupMailActivity : AppCompatActivity() {
         return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    @SuppressLint("QueryPermissionsNeeded")
     private fun sendEmail(address: String) {
-        val emailAddress = address
-        val title = "Kocaotalk 가입 인증 메일입니다"
+        authcode = createNumberCode()
 
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:") // 이메일 앱에서만 인텐트 처리되도록 설정
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress)) // 메일 수신 주소 목록
-            putExtra(Intent.EXTRA_SUBJECT, title) // 메일 제목 설정
-            authcode = createNumberCode()
-            putExtra(Intent.EXTRA_TEXT, "인증 코드: $authcode") // 메일 본문 설정
-        }
+        Thread {
+            try {
 
-        // 로그 추가
-        Log.d("SignupMailActivity", "Intent to send email: $intent")
+                // GMailSender.sendMail(제목, 본문내용, 받는사람)
+                Log.i("인증번호", authcode)
+                gMailSender.sendMail("KocoaTalk 인증메일입니다. ", "인증번호: $authcode", address)
 
-        // Ensure that the package manager is not null and can resolve the intent
-        if (packageManager?.resolveActivity(intent, 0) != null) {
-            Log.d("SignupMailActivity", "Email client found.")
-            startActivity(Intent.createChooser(intent, "메일 전송하기"))
-        } else {
-            Log.d("SignupMailActivity", "No email client found.")
-            Toast.makeText(this, "메일을 전송할 수 없습니다", Toast.LENGTH_LONG).show()
-        }
+
+                // 온클릭과 함께 만들어진 인증번호 이메일에 넣어서 보내기
+                runOnUiThread {
+
+
+                    Toast.makeText(applicationContext, "송신 완료", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: SendFailedException) {
+                // 쓰레드에서는 Toast를 띄우지 못하여 runOnUiThread를 호출해야 한다.
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } catch (e: MessagingException) {
+                println("인터넷 문제: $e")
+                // 쓰레드에서는 Toast를 띄우지 못하여 runOnUiThread를 호출해야 한다.
+                runOnUiThread {
+                    Toast.makeText(applicationContext, "인터넷 연결을 확인해 주십시오", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }.start()
+
     }
 
     private fun createNumberCode(): String { // 이메일 인증 코드 생성

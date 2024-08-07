@@ -12,23 +12,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.kocoatalk.Utils.GmailSender
 import com.example.kocoatalk.R
+import com.example.kocoatalk.Utils.GmailSender
 import javax.mail.MessagingException
 import javax.mail.SendFailedException
 
 class SignupMailActivity : AppCompatActivity() {
 
-    private lateinit var btn_auth: Button
-    private lateinit var btn_next: Button
-    private lateinit var edt_email: EditText
-    private lateinit var edt_authnum: EditText
-    private lateinit var txt_alert: TextView
-    private lateinit var authcode: String
-    var gMailSender = GmailSender(
-        "joonho340@gmail.com",
-        "fmjyziwxaplloryx"
-    )
+    private lateinit var btnAuth: Button
+    private lateinit var btnNext: Button
+    private lateinit var edtName: EditText
+    private lateinit var edtEmail: EditText
+    private lateinit var edtAuthNum: EditText
+    private lateinit var txtAlert: TextView
+    private lateinit var authCode: String
+    private val gMailSender = GmailSender("joonho340@gmail.com", "fmjyziwxaplloryx")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_mail)
@@ -38,99 +37,46 @@ class SignupMailActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
-        btn_auth = findViewById(R.id.btn_signup_auth_req)
-        btn_next = findViewById(R.id.btn_signup_netx)
-        edt_email = findViewById(R.id.edt_signup_email)
-        edt_authnum = findViewById(R.id.edt_signup_auth)
-        txt_alert = findViewById(R.id.txt_signup_alert)
+        btnAuth = findViewById(R.id.btn_signup_auth_req)
+        btnNext = findViewById(R.id.btn_signup_netx)
+        edtName=findViewById(R.id.edt_signup_name)
+        edtEmail = findViewById(R.id.edt_signup_email)
+        edtAuthNum = findViewById(R.id.edt_signup_auth)
+        txtAlert = findViewById(R.id.txt_signup_alert)
     }
 
     private fun setListeners() {
-        edt_email.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No action needed before text is changed
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // No action needed during text change
-            }
-
+        edtEmail.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val isValid = isValidEmail(s.toString())
-                btn_auth.isEnabled = isValid
-                if (isValid) {
-                    btn_auth.setBackgroundColor(
-                        ContextCompat.getColor(
-                            this@SignupMailActivity,
-                            R.color.green
-                        )
-                    )
-                } else {
-                    btn_auth.setBackgroundColor(
-                        ContextCompat.getColor(
-                            this@SignupMailActivity,
-                            R.color.gray
-                        )
-                    )
-                }
+                updateAuthButtonState(isValid)
             }
         })
 
-        btn_auth.setOnClickListener {
-            sendEmail(edt_email.text.toString())
-            btn_auth.isEnabled = false
-            btn_auth.setBackgroundColor(
-                ContextCompat.getColor(
-                    this@SignupMailActivity,
-                    R.color.gray
-                )
-            )
-            //전송 직후에 일단 disable시킴
+        btnAuth.setOnClickListener {
+            sendEmail(edtEmail.text.toString())
+            updateAuthButtonState(false)
         }
 
-        edt_authnum.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Do nothing
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Do nothing
-            }
-
+        edtAuthNum.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (s.isNullOrEmpty()) {
-                    btn_next.isEnabled = false
-                    btn_next.setBackgroundColor(
-                        ContextCompat.getColor(
-                            this@SignupMailActivity,
-                            R.color.gray
-                        )
-                    )
-
-
-                } else {
-                    btn_next.isEnabled = true
-                    btn_next.setBackgroundColor(
-                        ContextCompat.getColor(
-                            this@SignupMailActivity,
-                            R.color.green
-                        )
-                    )
-                }
+                updateNextButtonState(!s.isNullOrEmpty())
             }
         })
 
-        btn_next.setOnClickListener {
-
-            if (authcode == edt_authnum.text.toString()) {
-                val i = Intent(this@SignupMailActivity, SignupResActivity::class.java)
-                startActivity(i)
+        btnNext.setOnClickListener {
+            if (authCode == edtAuthNum.text.toString()) {
+                startActivity(Intent(this, SignupPwActivity::class.java))
+                intent.putExtra("email", edtEmail.text.toString())
+                intent.putExtra("name",edtName.text.toString())
             } else {
-                Toast.makeText(applicationContext, "잘못된 인증번호 입니다.", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(applicationContext, "잘못된 인증번호 입니다.", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun isValidEmail(email: String): Boolean {
@@ -138,48 +84,51 @@ class SignupMailActivity : AppCompatActivity() {
     }
 
     private fun sendEmail(address: String) {
-        authcode = createNumberCode()
-
+        authCode = createNumberCode()
         Thread {
             try {
-
-                // GMailSender.sendMail(제목, 본문내용, 받는사람)
-                Log.i("인증번호", authcode)
-                gMailSender.sendMail("KocoaTalk 인증메일입니다. ", "인증번호: $authcode", address)
-
-
-                // 온클릭과 함께 만들어진 인증번호 이메일에 넣어서 보내기
-                runOnUiThread {
-
-                    Toast.makeText(applicationContext, "송신 완료", Toast.LENGTH_SHORT).show()
-                }
+                Log.i("인증번호", authCode)
+                gMailSender.sendMail("KocoaTalk 인증메일입니다.", "인증번호: $authCode", address)
+                showToast("송신 완료")
             } catch (e: SendFailedException) {
-                // 쓰레드에서는 Toast를 띄우지 못하여 runOnUiThread를 호출해야 한다.
-                runOnUiThread {
-                    Toast.makeText(applicationContext, "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT)
-                        .show()
-                }
+                showToast("이메일 형식이 잘못되었습니다.")
             } catch (e: MessagingException) {
-                println("인터넷 문제: $e")
-                // 쓰레드에서는 Toast를 띄우지 못하여 runOnUiThread를 호출해야 한다.
-                runOnUiThread {
-                    Toast.makeText(applicationContext, "인터넷 연결을 확인해 주십시오", Toast.LENGTH_SHORT)
-                        .show()
-                }
+                Log.e("메일 전송 오류", "인터넷 문제: $e")
+                showToast("인터넷 연결을 확인해 주십시오")
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }.start()
-
     }
 
-    private fun createNumberCode(): String { // 이메일 인증 코드 생성
+    private fun createNumberCode(): String {
         val str = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-        var newCode = ""
-        for (x in 0 until 6) {
-            val random = (Math.random() * str.size).toInt()
-            newCode += str[random]
+        return (1..6).map { str.random() }.joinToString("")
+    }
+
+    private fun showToast(message: String) {
+        runOnUiThread {
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
         }
-        return newCode
+    }
+
+    private fun updateAuthButtonState(isEnabled: Boolean) {
+        btnAuth.isEnabled = isEnabled
+        btnAuth.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                if (isEnabled) R.color.green else R.color.gray
+            )
+        )
+    }
+
+    private fun updateNextButtonState(isEnabled: Boolean) {
+        btnNext.isEnabled = isEnabled
+        btnNext.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                if (isEnabled) R.color.green else R.color.gray
+            )
+        )
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SignupResActivity">
+    tools:context=".activities.SignupPwActivity">
 
 
     <LinearLayout
@@ -43,7 +43,7 @@
 
 
         <EditText
-            android:id="@+id/edt_signup_email"
+            android:id="@+id/edt_signup_pw"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -53,7 +53,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/txt_signup_pwalert"
+            android:id="@+id/ttv_signup_pwalert"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:textColor="@color/black"
@@ -63,7 +63,7 @@
 
 
         <EditText
-            android:id="@+id/edt_signup_auth"
+            android:id="@+id/edt_signup_pwcheck"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -73,13 +73,13 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/txt_signup_pwcheckalert"
+            android:id="@+id/ttv_signup_pwcheckalert"
             android:layout_width="300dp"
             android:layout_height="100dp"
             android:layout_gravity="center" />
 
         <Button
-            android:id="@+id/btn_signup_netx"
+            android:id="@+id/btn_signup_finish"
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

@@ -42,7 +42,7 @@
         </activity>
 
         <activity
-            android:name=".activities.SignupResActivity"
+            android:name=".activities.SignupPwActivity"
             android:exported="true">
 
         </activity>

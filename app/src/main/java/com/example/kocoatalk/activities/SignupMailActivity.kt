@@ -70,13 +70,12 @@ class SignupMailActivity : AppCompatActivity() {
 
         btnNext.setOnClickListener {
             if (authCode == edtAuthNum.text.toString()) {
-                intent.putExtra("email", edtEmail.text.toString())
-                intent.putExtra("name",edtName.text.toString())
+                val i = Intent(this@SignupMailActivity, SignupPwActivity::class.java)
+                i.putExtra("email", edtEmail.text.toString())
+                i.putExtra("name", edtName.text.toString())
 
 
-                Log.i("SignupMailDebug","email: "+intent.getStringExtra("email"))
-                Log.i("SignupMailDebug","name: "+intent.getStringExtra("name"))
-                startActivity(Intent(this, SignupPwActivity::class.java))
+                startActivity(i)
 
             } else {
                 Toast.makeText(applicationContext, "잘못된 인증번호 입니다.", Toast.LENGTH_SHORT).show()

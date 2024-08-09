@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private fun setOnclicks() {
         txt_signup.setOnClickListener {
             val i = Intent(this@MainActivity, SignupMailActivity::class.java)
+
             startActivity(i)
         }
 

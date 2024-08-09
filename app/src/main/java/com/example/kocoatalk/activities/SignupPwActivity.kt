@@ -1,5 +1,6 @@
 package com.example.kocoatalk.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -31,12 +32,21 @@ class SignupPwActivity : AppCompatActivity() {
     private lateinit var ttvPw: TextView
     private lateinit var ttvPwCheck: TextView
     private lateinit var btnFinish: Button
-    private lateinit var rmail:String
-    private lateinit var rname :String
+    private lateinit var rmail: String
+    private lateinit var rname: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_pw)
+        // SignupPwActivity에서
 
+        val email = intent.getStringExtra("email")
+        val name = intent.getStringExtra("name")
+        rmail= email.toString()
+        rname= name.toString()
+
+// Debug 로그로 데이터 확인
+        Log.d("SignupDebug", "Received email: $email")
+        Log.d("SignupDebug", "Received name: $name")
         initializeViews()
         setListeners()
     }
@@ -47,12 +57,10 @@ class SignupPwActivity : AppCompatActivity() {
         ttvPw = findViewById(R.id.ttv_signup_pwalert)
         ttvPwCheck = findViewById(R.id.ttv_signup_pwcheckalert)
         btnFinish = findViewById(R.id.btn_signup_finish)
-        val email: String = intent.getStringExtra("email") ?: ""
-        val name: String = intent.getStringExtra("name") ?: ""
-rmail=email
-        rname=name
-        Log.d("SignupDebug", "received email: "+email)
-        Log.d("SignupDebug", "received name: "+name)
+
+
+
+
     }
 
     private fun setListeners() {
@@ -90,7 +98,7 @@ rmail=email
                     response: Response<ResponseBody>
                 ) {
 
-                    Log.d("SignupDebug", "Response: "+response.toString())
+                    Log.d("SignupDebug", "Response: " + response.toString())
                     if (response.isSuccessful) {
                         startActivity(Intent(this@SignupPwActivity, MainActivity::class.java))
                         Toast.makeText(applicationContext, "가입이 완료되었습니다.", Toast.LENGTH_SHORT)

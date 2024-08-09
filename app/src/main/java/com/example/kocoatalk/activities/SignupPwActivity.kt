@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.example.kocoatalk.R
 import com.example.kocoatalk.Utils.SignupInterface
 import com.example.kocoatalk.Utils.User
+import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,13 +31,12 @@ class SignupPwActivity : AppCompatActivity() {
     private lateinit var ttvPw: TextView
     private lateinit var ttvPwCheck: TextView
     private lateinit var btnFinish: Button
-    private lateinit var email: String
-    private lateinit var name: String
+    private lateinit var rmail:String
+    private lateinit var rname :String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_pw)
-        email = intent.getStringExtra("email") ?: ""
-        name = intent.getStringExtra("name") ?: ""
+
         initializeViews()
         setListeners()
     }
@@ -46,6 +47,12 @@ class SignupPwActivity : AppCompatActivity() {
         ttvPw = findViewById(R.id.ttv_signup_pwalert)
         ttvPwCheck = findViewById(R.id.ttv_signup_pwcheckalert)
         btnFinish = findViewById(R.id.btn_signup_finish)
+        val email: String = intent.getStringExtra("email") ?: ""
+        val name: String = intent.getStringExtra("name") ?: ""
+rmail=email
+        rname=name
+        Log.d("SignupDebug", "received email: "+email)
+        Log.d("SignupDebug", "received name: "+name)
     }
 
     private fun setListeners() {
@@ -61,9 +68,9 @@ class SignupPwActivity : AppCompatActivity() {
 
 
         btnFinish.setOnClickListener {
-            val email = this.email
+            val email = this.rmail
             val password = edtPwCheck.text.toString()
-            val name = this.name
+            val name = this.rname
 
             val retrofit = Retrofit.Builder()
                 .baseUrl(SignupInterface.Register_Url)
@@ -73,11 +80,17 @@ class SignupPwActivity : AppCompatActivity() {
             val signupService = retrofit.create(SignupInterface::class.java)
             val user = User(email, password, name)
 
+            val gson = Gson()
+            val userJson = gson.toJson(user)
+            Log.d("SignupDebug", "User JSON: $userJson")
+
             signupService.registerUser(user).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
                     response: Response<ResponseBody>
                 ) {
+
+                    Log.d("SignupDebug", "Response: "+response.toString())
                     if (response.isSuccessful) {
                         startActivity(Intent(this@SignupPwActivity, MainActivity::class.java))
                         Toast.makeText(applicationContext, "가입이 완료되었습니다.", Toast.LENGTH_SHORT)

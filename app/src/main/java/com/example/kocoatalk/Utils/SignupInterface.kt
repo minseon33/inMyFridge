@@ -12,7 +12,7 @@ interface SignupInterface {
     fun registerUser(@Body user: User): Call<ResponseBody>
 
     companion object {
-        const val Register_Url = "http://13.210.31.62/signup.php"
+        const val Register_Url = "http://13.210.31.62/signup.php/"
     }
 }
 

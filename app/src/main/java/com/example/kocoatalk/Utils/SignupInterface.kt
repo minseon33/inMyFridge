@@ -8,15 +8,15 @@ import retrofit2.http.POST
 
 
 interface SignupInterface {
-    @POST("register")
-    fun registerUser(@Body user: User): Call<ResponseBody>
+    @POST("signup.php")
+    fun registerUser(@Body user: User_signup): Call<ResponseBody>
 
     companion object {
-        const val Register_Url = "http://13.210.31.62/signup.php/"
+        const val Register_Url = "http://13.210.31.62/"
     }
 }
 
-data class User(
+data class User_signup(
     val email: String,
     val password: String,
     val name: String

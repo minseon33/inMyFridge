@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.kocoatalk.R
 import com.example.kocoatalk.Utils.SignupInterface
-import com.example.kocoatalk.Utils.User
+import com.example.kocoatalk.Utils.User_signup
+
 import com.google.gson.Gson
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -86,7 +87,7 @@ class SignupPwActivity : AppCompatActivity() {
                 .build()
 
             val signupService = retrofit.create(SignupInterface::class.java)
-            val user = User(email, password, name)
+            val user = User_signup(email, password, name)
 
             val gson = Gson()
             val userJson = gson.toJson(user)
@@ -99,7 +100,7 @@ class SignupPwActivity : AppCompatActivity() {
                 ) {
 
                     Log.d("SignupDebug", "Response: " + response.toString())
-                    if (response.isSuccessful) {
+                    if (response.message().toString()=="User registered successfully") {
                         startActivity(Intent(this@SignupPwActivity, MainActivity::class.java))
                         Toast.makeText(applicationContext, "가입이 완료되었습니다.", Toast.LENGTH_SHORT)
                             .show()

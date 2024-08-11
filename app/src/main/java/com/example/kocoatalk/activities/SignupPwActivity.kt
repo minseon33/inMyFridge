@@ -101,7 +101,7 @@ class SignupPwActivity : AppCompatActivity() {
 
                     Log.d("SignupDebug", "Response: " + response.toString())
                     if (response.message().toString()=="User registered successfully") {
-                        startActivity(Intent(this@SignupPwActivity, MainActivity::class.java))
+                        startActivity(Intent(this@SignupPwActivity, LoginActivity::class.java))
                         Toast.makeText(applicationContext, "가입이 완료되었습니다.", Toast.LENGTH_SHORT)
                             .show()
                     } else {

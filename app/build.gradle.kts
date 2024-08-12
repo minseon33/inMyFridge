@@ -35,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -48,6 +51,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("com.navercorp.nid:oauth:5.9.1") // jdk 11
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation(files("libs/activation.jar"))
     implementation(files("libs/additionnal.jar"))
     implementation(files("libs/mail.jar"))

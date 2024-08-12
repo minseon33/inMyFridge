@@ -43,7 +43,7 @@
     <Button
         android:id="@+id/btn_login"
         android:background="@color/green"
-        android:layout_width="300dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_pw_login"
         android:layout_centerHorizontal="true"
@@ -58,7 +58,7 @@
     <Button
         android:background="@color/green"
         android:id="@+id/btn_kakaologin"
-        android:layout_width="300dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/space_loginmethods"
         android:layout_centerHorizontal="true"
@@ -71,20 +71,21 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
 
-    <Button
-        android:background="@color/green"
-        android:id="@+id/btn_naverlogin"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+
+
+    <com.navercorp.nid.oauth.view.NidOAuthLoginButton
         android:layout_below="@+id/space_loginmethods2"
+        android:id="@+id/btn_naverlogin"
         android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="네이버 로그인" />
+        android:layout_height="50dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_below="@+id/btn_naverlogin"
+
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
 
@@ -104,6 +105,8 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/ttv_signup"
             android:text="아이디/비밀번호 찾기"></TextView>
+
+
 
     </RelativeLayout>
 

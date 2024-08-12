@@ -42,8 +42,8 @@ class SignupPwActivity : AppCompatActivity() {
 
         val email = intent.getStringExtra("email")
         val name = intent.getStringExtra("name")
-        rmail= email.toString()
-        rname= name.toString()
+        rmail = email.toString()
+        rname = name.toString()
 
 // Debug 로그로 데이터 확인
         Log.d("SignupDebug", "Received email: $email")
@@ -58,8 +58,6 @@ class SignupPwActivity : AppCompatActivity() {
         ttvPw = findViewById(R.id.ttv_signup_pwalert)
         ttvPwCheck = findViewById(R.id.ttv_signup_pwcheckalert)
         btnFinish = findViewById(R.id.btn_signup_finish)
-
-
 
 
     }
@@ -100,10 +98,11 @@ class SignupPwActivity : AppCompatActivity() {
                 ) {
 
                     Log.d("SignupDebug", "Response: " + response.toString())
-                    if (response.message().toString()=="User registered successfully") {
+                    if (response.message().toString() == "User registered successfully") {
                         startActivity(Intent(this@SignupPwActivity, LoginActivity::class.java))
                         Toast.makeText(applicationContext, "가입이 완료되었습니다.", Toast.LENGTH_SHORT)
                             .show()
+                        finish()
                     } else {
                         Toast.makeText(applicationContext, "가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     }

@@ -84,13 +84,20 @@ class LoginActivity : AppCompatActivity() {
                         val responseBody = response.body()?.string()
                         Log.d("SignupDebug", "Response body: $responseBody")
                         if(responseBody=="Login successful"){
-                            val intent=Intent(this@LoginActivity, SignupMailActivity::class.java)
-
+                            val intent=Intent(this@LoginActivity, MainActivity::class.java)
                             startActivity(intent)
                         }
                         // responseBody로 JSON 데이터 파싱 후 필요한 작업 수행
                     } else {
                         Log.d("SignupDebug", "Response error: ${response.errorBody()?.string()}")
+                        if(response.errorBody().toString()=="No user found with that email") {
+                            Toast.makeText(
+                                applicationContext,
+                                "로그인 에러: 가입되지 않은 이메일입니다.",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
 
                 }

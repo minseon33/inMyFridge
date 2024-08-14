@@ -14,6 +14,7 @@ import com.example.kocoatalk.R
 import com.example.kocoatalk.Utils.LoginInterface
 import com.example.kocoatalk.Utils.PreferenceUtil
 import com.example.kocoatalk.Utils.User_login
+import com.example.kocoatalk.databinding.ActivityLoginBinding
 import com.google.gson.Gson
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
@@ -35,22 +36,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var txt_signup: TextView
-    private lateinit var txt_findidpw: TextView
-    private lateinit var edt_email: EditText
-    private lateinit var edt_password: EditText
-    private lateinit var btn_login: Button
-    private lateinit var btn_kakoLogin: Button
-    private lateinit var btn_naver: NidOAuthLoginButton
+
     private lateinit var pref: SharedPreferences
     private lateinit var prefutil: PreferenceUtil
-
+    private lateinit var binding : ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         initializeViews()
+        setContentView(binding.root)
         setOnclicks()
     }
 
@@ -58,29 +54,22 @@ class LoginActivity : AppCompatActivity() {
         val clientId: String = getString(R.string.social_login_info_naver_client_id)
         val clientSecret: String = getString(R.string.social_login_info_naver_client_secret)
         val clientName: String = getString(R.string.social_login_info_naver_client_name)
-        txt_signup = findViewById(R.id.ttv_signup)
-        txt_findidpw = findViewById(R.id.ttv_findidpw)
-        btn_login = findViewById(R.id.btn_login)
-        btn_kakoLogin = findViewById(R.id.btn_kakaologin)
-        btn_naver = findViewById(R.id.btn_naverlogin)
-        edt_email = findViewById(R.id.edt_email_login)
         prefutil = PreferenceUtil(this)
         pref = prefutil.getPreferences("pref_logedin_user")
-        edt_password = findViewById(R.id.edt_pw_login)
         NaverIdLoginSDK.initialize(this, clientId, clientSecret, clientName)
     }
 
     private fun setOnclicks() {
-        txt_signup.setOnClickListener {
+        binding.ttvSignup.setOnClickListener {
             val i = Intent(this@LoginActivity, SignupMailActivity::class.java)
 
             startActivity(i)
         }
 
         // 다른 버튼 클릭 이벤트 추가
-        btn_login.setOnClickListener {
-            val email = edt_email.text.toString()
-            val password = edt_password.text.toString()
+        binding.btnLogin.setOnClickListener {
+            val email = binding.edtEmailLogin.text.toString()
+            val password = binding.edtPwLogin.text.toString()
 
 
             val retrofit = Retrofit.Builder()
@@ -114,16 +103,14 @@ class LoginActivity : AppCompatActivity() {
                                 prefutil.setString(pref, "email", email)
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
-                            }
-                            else if (message == "Incorrect password") {
+                            } else if (message == "Incorrect password") {
                                 Toast.makeText(
                                     applicationContext,
                                     "비밀번호가 일치하지 않습니다",
                                     Toast.LENGTH_SHORT
                                 )
                                     .show()
-                            }
-                            else  {
+                            } else {
                                 Toast.makeText(
                                     applicationContext,
                                     "가입되지 않은 이메일입니다.",
@@ -156,17 +143,17 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-        btn_kakoLogin.setOnClickListener {
+        binding.btnKakaologin.setOnClickListener {
             // 카카오 로그인 로직 추가
         }
 
-        btn_naver.setOnClickListener {
+        binding.btnNaverlogin.setOnClickListener {
             // 네이버 로그인 로직 추가
             naverLogin()
 
         }
 
-        txt_findidpw.setOnClickListener {
+        binding.ttvFindidpw.setOnClickListener {
             // 아이디/비밀번호 찾기 화면으로 이동
         }
     }
@@ -180,19 +167,23 @@ class LoginActivity : AppCompatActivity() {
                         val name = result.profile?.name.toString()
                         val email = result.profile?.email.toString()
                         val gender = result.profile?.gender.toString()
+                        val id = result.profile?.id.toString()
 
                         Log.d("NaverLogin", "Name: $name")
                         Log.d("NaverLogin", "Email: $email")
-                        Log.d("NaverLogin", "Profile: "+result.profile.toString())
+                        Log.d("NaverLogin", "Gender: $gender")
+                        Log.d("NaverLogin", "id: $id")
+                        Log.d("NaverLogin", "Profile: " + result.profile.toString())
                         val pref = prefutil.getPreferences("pref_logedin_user")
                         prefutil.setString(pref, "loginmethod", "naver")
-                        prefutil.setString(pref, "name", name)
-                        // MainActivity로 이동
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        prefutil.setString(pref, "id", id)
+                        //여기서 DB에 ID정보랑, 이름, 가입방식 저장해야 함
 
-                        startActivity(intent)
+                        //저장하고 나면 메인 액티비티 부터는 DB에서 생성된 우리 앱 내 유저 고유값인 user_id를 활용해야 함.
 
-                        finish()
+                        //기존에 ID가 있다 - api에서 받은 네이버 id값 서버에 전달하고 userid값 받아와야 함.
+
+                        //기존에 id가 없다 - 새로 네이버 id값 db에 입력하고 잘 됐음 응답 받은 다음 메인액티비티 진입
                     }
 
                     override fun onError(errorCode: Int, message: String) {

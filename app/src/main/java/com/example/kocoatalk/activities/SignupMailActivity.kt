@@ -6,86 +6,55 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.kocoatalk.R
 import com.example.kocoatalk.Utils.GmailSender
+import com.example.kocoatalk.databinding.ActivitySignupMailBinding
 import javax.mail.MessagingException
 import javax.mail.SendFailedException
 
 class SignupMailActivity : AppCompatActivity() {
 
-    private lateinit var btnAuth: Button
-    private lateinit var btnNext: Button
-    private lateinit var edtName: EditText
-    private lateinit var edtEmail: EditText
-    private lateinit var edtAuthNum: EditText
-    private lateinit var txtAlert: TextView
     private lateinit var authCode: String
     private val gMailSender = GmailSender("joonho340@gmail.com", "fmjyziwxaplloryx")
+    private lateinit var binding: ActivitySignupMailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup_mail)
-
-        initializeViews()
+        binding = ActivitySignupMailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setListeners()
     }
 
-    private fun initializeViews() {
-        btnAuth = findViewById(R.id.btn_signup_auth_req)
-        btnNext = findViewById(R.id.btn_signup_netx)
-        edtName=findViewById(R.id.edt_signup_name)
-        edtEmail = findViewById(R.id.edt_signup_email)
-        edtAuthNum = findViewById(R.id.edt_signup_auth)
-        txtAlert = findViewById(R.id.txt_signup_alert)
-    }
-
     private fun setListeners() {
-        edtEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        binding.edtSignupEmail.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
-                val isValid = isValidEmail(s.toString())
-                updateAuthButtonState(isValid)
+                updateAuthButtonState(isValidEmail(s.toString()))
             }
         })
 
-        btnAuth.setOnClickListener {
-            sendEmail(edtEmail.text.toString())
-            updateAuthButtonState(false)
+        binding.btnSignupAuthReq.setOnClickListener {
+            sendEmail(binding.edtSignupEmail.text.toString())
         }
 
-        edtAuthNum.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        binding.edtSignupAuth.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
                 updateNextButtonState(!s.isNullOrEmpty())
             }
         })
 
-        btnNext.setOnClickListener {
-            if (authCode == edtAuthNum.text.toString()) {
-                val i = Intent(this@SignupMailActivity, SignupPwActivity::class.java)
-                i.putExtra("email", edtEmail.text.toString())
-                i.putExtra("name", edtName.text.toString())
-
-
-                startActivity(i)
-
+        binding.btnSignupNetx.setOnClickListener {
+            if (authCode == binding.edtSignupAuth.text.toString()) {
+                startSignupPwActivity()
             } else {
-                Toast.makeText(applicationContext, "잘못된 인증번호 입니다.", Toast.LENGTH_SHORT).show()
+                showToast("잘못된 인증번호 입니다.")
             }
         }
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
+    private fun isValidEmail(email: String) = email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     private fun sendEmail(address: String) {
         authCode = createNumberCode()
@@ -105,10 +74,7 @@ class SignupMailActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun createNumberCode(): String {
-        val str = arrayOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
-        return (1..6).map { str.random() }.joinToString("")
-    }
+    private fun createNumberCode() = (1..6).map { (0..9).random().toString() }.joinToString("")
 
     private fun showToast(message: String) {
         runOnUiThread {
@@ -117,22 +83,30 @@ class SignupMailActivity : AppCompatActivity() {
     }
 
     private fun updateAuthButtonState(isEnabled: Boolean) {
-        btnAuth.isEnabled = isEnabled
-        btnAuth.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                if (isEnabled) R.color.green else R.color.gray
-            )
-        )
+        binding.btnSignupAuthReq.apply {
+            this.isEnabled = isEnabled
+            setBackgroundColor(ContextCompat.getColor(this@SignupMailActivity, if (isEnabled) R.color.green else R.color.gray))
+        }
     }
 
     private fun updateNextButtonState(isEnabled: Boolean) {
-        btnNext.isEnabled = isEnabled
-        btnNext.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                if (isEnabled) R.color.green else R.color.gray
-            )
-        )
+        binding.btnSignupNetx.apply {
+            this.isEnabled = isEnabled
+            setBackgroundColor(ContextCompat.getColor(this@SignupMailActivity, if (isEnabled) R.color.green else R.color.gray))
+        }
+    }
+
+    private fun startSignupPwActivity() {
+        Intent(this, SignupPwActivity::class.java).apply {
+            putExtra("email", binding.edtSignupEmail.text.toString())
+            putExtra("name", binding.edtSignupEmail.text.toString())
+            startActivity(this)
+        }
+    }
+
+    private open class SimpleTextWatcher : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {}
     }
 }

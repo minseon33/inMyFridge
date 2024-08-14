@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kocoatalk.R
 import com.example.kocoatalk.Utils.PreferenceUtil
+import com.example.kocoatalk.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

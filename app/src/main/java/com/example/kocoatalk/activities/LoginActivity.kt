@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.kocoatalk.R
 import com.example.kocoatalk.Utils.*
 import com.example.kocoatalk.databinding.ActivityLoginBinding
-import com.google.gson.Gson
+
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback

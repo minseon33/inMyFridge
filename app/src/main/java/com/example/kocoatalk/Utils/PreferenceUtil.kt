@@ -15,6 +15,12 @@ class PreferenceUtil(context: Context) {
     fun setString(preferences: SharedPreferences, key: String, Value: String) {
         preferences.edit().putString(key, Value).apply()
     }
+    fun getBoolean(preferences: SharedPreferences, key: String, defValue: Boolean): Boolean {
+        return preferences.getBoolean(key, defValue)
+    }
+    fun setBoolean(preferences: SharedPreferences, key: String, Value: Boolean) {
+        preferences.edit().putBoolean(key, Value).apply()
+    }
 
     fun getPreferences(prefName: String): SharedPreferences {
         val preferences: SharedPreferences =

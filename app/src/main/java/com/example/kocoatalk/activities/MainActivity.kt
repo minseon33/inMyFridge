@@ -12,15 +12,22 @@ import com.example.kocoatalk.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-
-    private lateinit var preferenceUtil: PreferenceUtil
+    private lateinit var prefUtil: PreferenceUtil
+    private lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        preferenceUtil = PreferenceUtil(this)
-        val pref: SharedPreferences = preferenceUtil.getPreferences("pref_logedin_user")
-        Log.i(TAG, preferenceUtil.getString(pref, "email", ""))
+
+        prefUtil = PreferenceUtil(this)
+        pref = prefUtil.getPreferences("pref_logedin_user")
+        var method=prefUtil.getString(pref, "loginmethod", "")
+        var id=prefUtil.getString(pref, "userid", "")
+        var name=prefUtil.getString(pref, "username", "")
+        Log.e("MainActivity", "Login Method : $method")
+        Log.e("MainActivity", "User ID : $id")
+        Log.e("MainActivity", "User Name : $name")
+
 
     }
 }

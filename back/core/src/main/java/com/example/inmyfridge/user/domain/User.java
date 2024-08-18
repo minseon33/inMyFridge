@@ -1,20 +1,23 @@
 package com.example.inmyfridge.user.domain;
 
+import com.example.inmyfridge.common.abstractEntity.BaseEntity;
 import com.example.inmyfridge.user.enums.UserRole;
 import com.example.inmyfridge.user.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Entity(name = "USERS")
+@SQLDelete(sql = "UPDATE USERS SET userStatus = deletedUser WHERE id=?") //todo @SQLDelete 동작하는지 테스트 코드 작성하여 테스트해보기 (24.8.18)
+@Where(clause = "userStatus=activeUser") //todo @Where 동작하는지 테스트 코드 작성하여 테스트해보기 (24.8.18)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,22 +38,10 @@ public class User {
 
     private LocalDate birthday;
 
-    @NotNull
-    @Column(name = "created_at")
-    private LocalDateTime createAt;
-
-    @Column(name = "last_login_at")
-    private LocalDateTime lastLoginAt;
-
     @Enumerated(EnumType.STRING)
     private UserStatus userStatus;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-
-
-
-
-
-
+    
 }

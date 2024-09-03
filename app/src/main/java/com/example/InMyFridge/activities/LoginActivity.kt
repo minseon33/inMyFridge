@@ -1,4 +1,4 @@
-package com.example.kocoatalk.activities
+package com.example.InMyFridge.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kocoatalk.R
-import com.example.kocoatalk.Utils.*
-import com.example.kocoatalk.databinding.ActivityLoginBinding
+import com.example.InMyFridge.R
+import com.example.InMyFridge.Utils.*
+import com.example.InMyFridge.databinding.ActivityLoginBinding
 
 import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin

@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.kocoatalk"
+    namespace = "com.example.InMyFridge"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.kocoatalk"
+        applicationId = "com.example.InMyFridge"
         minSdk = 28
         targetSdk = 34
         versionCode = 1

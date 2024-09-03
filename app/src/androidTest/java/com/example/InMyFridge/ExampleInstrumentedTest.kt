@@ -1,4 +1,4 @@
-package com.example.kocoatalk
+package com.example.InMyFridge
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

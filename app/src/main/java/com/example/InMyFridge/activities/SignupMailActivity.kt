@@ -1,4 +1,4 @@
-package com.example.kocoatalk.activities
+package com.example.InMyFridge.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,9 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.kocoatalk.R
-import com.example.kocoatalk.Utils.GmailSender
-import com.example.kocoatalk.databinding.ActivitySignupMailBinding
+import com.example.InMyFridge.R
+import com.example.InMyFridge.Utils.GmailSender
+import com.example.InMyFridge.databinding.ActivitySignupMailBinding
 import javax.mail.MessagingException
 import javax.mail.SendFailedException
 

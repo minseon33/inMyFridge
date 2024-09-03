@@ -1,4 +1,4 @@
-package com.example.kocoatalk
+package com.example.InMyFridge
 
 import org.junit.Test
 

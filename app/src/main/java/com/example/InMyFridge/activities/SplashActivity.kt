@@ -1,4 +1,4 @@
-package com.example.kocoatalk.activities
+package com.example.InMyFridge.activities
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kocoatalk.KocaotalkApplication
-import com.example.kocoatalk.R
-import com.example.kocoatalk.Utils.PreferenceUtil
+import com.example.InMyFridge.KocaotalkApplication
+import com.example.InMyFridge.R
+import com.example.InMyFridge.Utils.PreferenceUtil
 
 class SplashActivity : AppCompatActivity() {
 

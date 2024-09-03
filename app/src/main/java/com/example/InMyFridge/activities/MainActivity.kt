@@ -1,4 +1,4 @@
-package com.example.kocoatalk.activities
+package com.example.InMyFridge.activities
 
 
 
@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.kocoatalk.R
-import com.example.kocoatalk.Utils.PreferenceUtil
+import com.example.InMyFridge.R
+import com.example.InMyFridge.Utils.PreferenceUtil
 
 
 class MainActivity : AppCompatActivity() {

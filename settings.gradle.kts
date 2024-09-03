@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Kocoatalk"
+rootProject.name = "InMyFridge"
 include(":app")
  

@@ -1,4 +1,4 @@
-package com.example.kocoatalk
+package com.example.InMyFridge
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color

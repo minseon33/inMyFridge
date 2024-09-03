@@ -1,8 +1,8 @@
-package com.example.kocoatalk
+package com.example.InMyFridge
 
 import android.app.Application
 import android.content.SharedPreferences
-import com.example.kocoatalk.Utils.PreferenceUtil
+import com.example.InMyFridge.Utils.PreferenceUtil
 
 class KocaotalkApplication : Application() {
     var isAppRunning: Boolean = false

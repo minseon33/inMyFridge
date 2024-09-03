@@ -1,4 +1,4 @@
-package com.example.kocoatalk.Utils
+package com.example.InMyFridge.Utils
 
 import okhttp3.ResponseBody
 import retrofit2.Call

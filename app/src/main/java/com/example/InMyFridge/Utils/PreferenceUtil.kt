@@ -1,4 +1,4 @@
-package com.example.kocoatalk.Utils
+package com.example.InMyFridge.Utils
 
 import android.content.Context
 import android.content.SharedPreferences

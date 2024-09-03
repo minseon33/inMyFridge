@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Kocoatalk</string>
+    <string name="app_name">InMyFridge</string>
     <string name="social_login_info_naver_client_id">RmGD7E5pXJTCej8bNfbo</string>
     <string name="social_login_info_naver_client_secret">zpxMTIChLz</string>
-    <string name="social_login_info_naver_client_name">kocoatalk</string>
+    <string name="social_login_info_naver_client_name">InMyFridge</string>
 </resources>

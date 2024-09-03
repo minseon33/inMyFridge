@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.LoginActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="255dp"
+        android:layout_height="255dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/appicon" />
+
+
+
+    <EditText
+        android:id="@+id/edt_email_login"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:hint="E-MAIL" />
+
+
+
+
+    <EditText
+        android:id="@+id/edt_pw_login"
+        android:layout_width="300dp"
+        android:inputType="textPassword"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_email_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:hint="PASSWORD" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:background="@color/green"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_pw_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="로그인" />
+
+    <Space
+        android:layout_below="@+id/btn_login"
+        android:id="@+id/space_loginmethods"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <Button
+        android:background="@color/green"
+        android:id="@+id/btn_kakaologin"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space_loginmethods"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="카카오 로그인" />
+
+    <Space
+        android:layout_below="@+id/btn_kakaologin"
+        android:id="@+id/space_loginmethods2"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+
+
+    <com.navercorp.nid.oauth.view.NidOAuthLoginButton
+        android:layout_below="@+id/space_loginmethods2"
+        android:id="@+id/btn_naverlogin"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_height="50dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@+id/btn_naverlogin"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+
+        >
+
+        <TextView
+            android:id="@+id/ttv_signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="회원가입" />
+
+        <TextView
+            android:id="@+id/ttv_findidpw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ttv_signup"
+            android:text="아이디/비밀번호 찾기"></TextView>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

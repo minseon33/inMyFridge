@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.SignupMailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="회원가입"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="기본정보 입력"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/edt_signup_name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="이름"
+            android:paddingTop="20dp"
+
+            android:textSize="20dp" />
+
+
+        <EditText
+            android:id="@+id/edt_signup_email"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="이메일 주소를 입력해 주세요"
+            android:paddingTop="20dp"
+            android:textSize="20dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp" />
+        <Button
+            android:id="@+id/btn_signup_auth_req"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@color/gray"
+            android:enabled="false"
+            android:text="인증번호 요청"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/ttv_signup_mailsent"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+        <EditText
+            android:id="@+id/edt_signup_auth"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:hint="인증번호를 입력해 주세요"
+            android:paddingTop="20dp"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txt_signup_alert"
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:id="@+id/btn_signup_netx"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@color/gray"
+            android:enabled="false"
+            android:text="다음"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

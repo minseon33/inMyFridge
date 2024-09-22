@@ -34,6 +34,7 @@ public class User extends UserBaseEntity {
 
     private String phoneNumber;
 
+    @Column(nullable = false)
     private String email;
 
     private LocalDate birthday;

@@ -1,9 +1,6 @@
 package com.example.inmyfridge.recipeBoard.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +16,7 @@ public class RecipeStep {
 
     private String description;
 
+    @OneToOne
     private CookingImage cookingImage;
 
 }

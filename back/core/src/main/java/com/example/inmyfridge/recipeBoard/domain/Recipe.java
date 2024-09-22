@@ -14,7 +14,7 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long stepCount;
+    private Long stepTotalCount; // steps의 총 개수
 
     @OneToMany
     private List<RecipeStep> recipeSteps;
